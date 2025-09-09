@@ -92,7 +92,7 @@ def login ():
         El primer parametro es la identidad del usuario (Subject (sub)) o ID, iat (issue at) que se refiere a la 
         fecha
         '''
-        access_token = create_access_token(identity=str(usuario[1]), expires_delta = expires) #[1] es la passwd del usuario
+        access_token = create_access_token(identity=str(usuario[2]), expires_delta = expires) #[1] es la passwd del usuario
 
         cursor.close()
 
@@ -106,7 +106,7 @@ def login ():
 def datos ():
 
     #Obtenemos el token
-    current_user = get_jwt_identity() #Este es el subject (sub) que en si es quien es el usuario
+    current_user = get_jwt_identity() #Este es el subject (sub), id del usuario
 
     #Nos conectamos a la BD
     cursor = get_db_connection()
@@ -121,7 +121,7 @@ def datos ():
         user_info = {
             "id_usuario":usuario[0],
             "nombre":usuario[1], 
-            "email":usuario[2],  
+            "email":usuario[2] 
         }
         return jsonify({"Datos":user_info}), 200
     else: 

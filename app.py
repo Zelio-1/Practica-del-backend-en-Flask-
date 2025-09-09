@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from routes.tareas import tareas_bp
 from routes.usuarios import usuarios_bp
 from config.db import init_db, mysql
+from flask_jwt_extended import JWTManager
 
 #Cargar las variables de entorno 
 load_dotenv()
@@ -16,6 +17,10 @@ def create_app():
 
     #Configurar la BD
     init_db(app) #Arranca la basen de datos con flask
+
+    #Inicializando JWT. El secreto sirve para firmar el token, y todos los que sean firmados en este backend, tiene que tener esta firma
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET')
+    jwt = JWTManager(app)
 
     #Registrar el blueprint
     app.register_blueprint (tareas_bp, url_prefix = '/tareas')

@@ -121,9 +121,14 @@ def eliminar (id_tarea):
     cursor.execute (query, (id_tarea, ))
     cursor.connection.commit() #Para guardar los cambios
     eliminado = cursor.fetchone()
-    cursor.close()
+
+    if not eliminado[1] == int(current_user): 
+        cursor.close()
+        return jsonify({"Error":"Credenciales incorrectas"}), 401
 
     if eliminado: 
+        cursor.close()
         return jsonify({"Error":"Error en la eliminacion de la tarea"})
     else: 
+        cursor.close()
         return jsonify({"Mensaje":"Tarea eliminada exitosamente"})

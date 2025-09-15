@@ -116,11 +116,11 @@ def eliminar (id_tarea):
     cursor = get_db_connection()
 
     #Ejecutar la funcion 
-    query = "DELETE FROM tareas WHERE id_tarea = %s;"
+    query = "DELETE FROM tareas WHERE id_tarea = %s AND id_usuario = %s;"
 
-    cursor.execute (query, (id_tarea, ))
-    eliminado = cursor.fetchone()
+    cursor.execute (query, (id_tarea, current_user))
     cursor.connection.commit() #Para guardar los cambios
+    eliminado = cursor.fetchone()
     cursor.close()
 
     if eliminado: 

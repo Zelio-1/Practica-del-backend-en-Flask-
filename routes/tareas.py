@@ -120,6 +120,8 @@ def eliminar (id_tarea):
 
     cursor.execute (query, (id_tarea, ))
     eliminado = cursor.fetchone()
+    cursor.connection.commit() #Para guardar los cambios
+    cursor.close()
 
     if eliminado: 
         return jsonify({"Error":"Error en la eliminacion de la tarea"})

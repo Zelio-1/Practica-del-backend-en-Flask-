@@ -115,6 +115,10 @@ def eliminar (id_tarea):
     #Conectarse a la DB
     cursor = get_db_connection()
 
+    #Verificmos que la tarea existe 
+    query_1 = "SELECT*FROM tareas WHERE id_tarea = %s"
+    cursor.execute (query_1, (id_tarea, ))
+
     '''
     Verificamos que la tarea pertenece al usuario logeado.eliminado hace referencia a la tabla tareas y el
     indice lo hace al atributo de la entidad (tareas)

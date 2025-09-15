@@ -117,7 +117,6 @@ def eliminar (id_tarea):
 
     #Ejecutar la funcion 
     query = "DELETE FROM tareas where = %s"
-    cursor.execute(query, (current_user, ))
 
     cursor.execute (query, (id_tarea, ))
     eliminado = cursor.fetchone()

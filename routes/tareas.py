@@ -115,16 +115,20 @@ def eliminar (id_tarea):
     #Conectarse a la DB
     cursor = get_db_connection()
 
+    '''
+    Verificamos que la tarea pertenece al usuario logeado.eliminado hace referencia a la tabla tareas y el
+    indice lo hace al atributo de la entidad (tareas)
+    '''
+    if not eliminado[1] == int(current_user): 
+        cursor.close()
+        return jsonify({"Error":"Credenciales incorrectas"}), 401
+
     #Ejecutar la funcion 
     query = "DELETE FROM tareas WHERE id_tarea = %s;"
 
     cursor.execute (query, (id_tarea, ))
     cursor.connection.commit() #Para guardar los cambios
     eliminado = cursor.fetchone()
-
-    if not eliminado[1] == int(current_user): 
-        cursor.close()
-        return jsonify({"Error":"Credenciales incorrectas"}), 401
 
     if eliminado: 
         cursor.close()

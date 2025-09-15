@@ -106,6 +106,23 @@ def modificar (id_tarea):
     finally: 
         cursor.close()
 
+@tareas_bp.route('/eliminar/<int:id_tarea>', methods=['DELETE'])
+@jwt_required() 
+def eliminar (id_tarea): 
+    #Obtenemos la identidad del dueño del token  
+    current_user = get_jwt_identity()
 
+    #Conectarse a la DB
+    cursor = get_db_connection()
 
-#Creando endpoint para 
+    #Ejecutar la funcion 
+    query = "DELETE FROM tareas where = %s"
+    cursor.execute(query, (current_user, ))
+
+    cursor.execute (query, (id_tarea, ))
+    eliminado = cursor.fetchone()
+
+    if eliminado: 
+        return jsonify({"Error":"Error en la eliminacion de la tarea"})
+    else: 
+        return jsonify({"Mensaje":"Tarea eliminada exitosamente"})

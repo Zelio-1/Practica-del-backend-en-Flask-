@@ -119,7 +119,8 @@ def eliminar (id_tarea):
     Verificamos que la tarea pertenece al usuario logeado.eliminado hace referencia a la tabla tareas y el
     indice lo hace al atributo de la entidad (tareas)
     '''
-    if not eliminado[1] == int(current_user): 
+    tarea = cursor.fethone()
+    if not tarea[1] == int(current_user): 
         cursor.close()
         return jsonify({"Error":"Credenciales incorrectas"}), 401
 
